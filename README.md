@@ -1,4 +1,4 @@
-gulp-clean-by-sitemap
+gulp-read-sitemap
 =====================
 
 Looks through a sitemap and deletes any files found
