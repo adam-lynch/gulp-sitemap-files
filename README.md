@@ -1,4 +1,4 @@
-gulp-read-sitemap
+gulp-sitemap-files
 =====================
 
 
