@@ -43,3 +43,6 @@ gulp.task('default', ['clean']);
 `sitemapFiles(siteUrl)`
 
 - `siteUrl` - string.
+
+### Note
+As far as default files go, only HTML files are supported right now (i.e. `http://www.example.com/` -> `http://www.example.com/index.html`). If you need anything more, create an issue explaining how you'd like it to work :).
