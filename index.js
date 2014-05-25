@@ -7,11 +7,12 @@ var Vinyl = require('vinyl');
 
 module.exports = function(siteUrl){
     var pluginName = 'gulp-sitemap-files';
-    siteUrl = siteUrl + (siteUrl.slice(-1) === '/' ? '' : '/');
+    if(siteUrl) siteUrl = siteUrl + (siteUrl.slice(-1) === '/' ? '' : '/');
 
     function bufferContents(file) {
         if (file.isNull()) return; // ignore
-        if (file.isStream()) return this.emit('error', new Error(pluginName, 'Streaming not supported'));
+        if (file.isStream()) return this.emit('error', new Error(pluginName + ': Streaming not supported'));
+        if(!siteUrl) return this.emit('error', new Error(pluginName + ': siteUrl argument missing!'));
 
         var self = this;
         var xml = file.contents.toString();

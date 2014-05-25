@@ -17,6 +17,33 @@ var createFile = function(filename, contents){
 
 describe('gulp-sitemap-files', function(){
 
+    it("should throw an error if siteUrl isn't passed", function(done){
+        var file = createFile('simple.xml', '');
+
+        var numberOfOutputFiles = 0;
+        var numberOfErrorsThrown = 0;
+        var stream = sitemapFiles();
+
+        stream.on('data', function(){
+            numberOfOutputFiles++;
+        });
+
+        stream.on('end', function(){
+            expect(numberOfOutputFiles).to.equal(0);
+            expect(numberOfErrorsThrown).to.equal(1);
+            done();
+        });
+
+        stream.on('error', function(){
+            numberOfErrorsThrown++;
+        });
+
+        expect(stream.write).to.throw(Error);
+        stream.write(file);
+        stream.end();
+    });
+
+
     it("should skip file if it's empty", function(done){
         var file = createFile('simple.xml', '');
 
