@@ -1,0 +1,37 @@
+{
+  "name": "gulp-sitemap-files",
+  "version": "0.0.1",
+  "description": "Gulp plugin to get all files listed in a sitemap",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/adam-lynch/gulp-sitemap-files"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "gulpplugin",
+    "sitemap",
+    "xml",
+    "files"
+  ],
+  "author": "Adam Lynch <contact@adamlynch.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/adam-lynch/gulp-sitemap-files/issues"
+  },
+  "homepage": "https://github.com/adam-lynch/gulp-sitemap-files",
+  "dependencies": {
+    "through": "~2.3.4",
+    "xml2js": "^0.4.3"
+  },
+  "engines": {
+    "node": ">=0.9"
+  },
+  "devDependencies": {
+    "mocha": "^1.19.0",
+    "vinyl": "^0.2.3",
+    "chai": "^1.9.1"
+  }
+}
