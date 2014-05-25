@@ -24,14 +24,14 @@
   "homepage": "https://github.com/adam-lynch/gulp-sitemap-files",
   "dependencies": {
     "through": "~2.3.4",
-    "xml2js": "^0.4.3"
+    "xml2js": "^0.4.3",
+    "vinyl": "^0.2.3"
   },
   "engines": {
     "node": ">=0.9"
   },
   "devDependencies": {
     "mocha": "^1.19.0",
-    "vinyl": "^0.2.3",
     "chai": "^1.9.1"
   }
 }
