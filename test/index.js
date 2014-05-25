@@ -1,5 +1,6 @@
 var sitemapFiles = require('../');
 var fs = require('fs');
+var path = require('path');
 var mocha = require('mocha');
 var File = require('vinyl');
 var Buffer = require('buffer').Buffer;
@@ -8,9 +9,7 @@ var expect = chai.expect;
 
 var createFile = function(filename, contents){
     return new File({
-        cwd: "/",
-        base: "/test/",
-        path: "/test/fixtures/" + filename,
+        path: path.resolve('./test/fixtures/' + filename),
         contents: new Buffer(contents)
     });
 };

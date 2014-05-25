@@ -24,7 +24,7 @@ module.exports = function(siteUrl){
                     var relativePathToFile = url.loc.toString().replace(new RegExp('^' + siteUrl), '');
                     relativePathToFile = relativePathToFile + (!relativePathToFile || relativePathToFile.slice(-1) === '/' ? 'index.html' : '');
 
-                    var fullFilePath = path.join(process.cwd(), path.dirname(file.path), relativePathToFile);
+                    var fullFilePath = path.join(path.dirname(file.path), relativePathToFile);
                     var fileContents = fs.readFileSync(fullFilePath);
 
                     var vinyl = new Vinyl({
