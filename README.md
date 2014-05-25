@@ -3,7 +3,7 @@ gulp-sitemap-files [![Build Status](https://travis-ci.org/adam-lynch/gulp-sitema
 
 # Work in progress, not ready yet
 
-A [Gulp](http://github.com/gulpjs/gulp) plugin to get all files listed in a sitemap. See [sitemaps.org/protocol.html](http://www.sitemaps.org/protocol.html) and [pgilad/gulp-sitemap](https://github.com/pgilad/gulp-sitemap).
+A Gulp plugin to get all files listed in a sitemap. See [sitemaps.org/protocol.html](http://www.sitemaps.org/protocol.html) and [pgilad/gulp-sitemap](https://github.com/pgilad/gulp-sitemap).
 
 # Information
 <table>
