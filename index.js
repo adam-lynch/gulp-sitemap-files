@@ -1,57 +1,76 @@
 'use strict';
 var fs = require('fs');
 var path = require('path');
-var through = require('through');
+var through = require('through2');
+var gutil = require('gulp-util');
 var parseXML = require('xml2js').parseString;
-var Vinyl = require('vinyl');
+
+var PluginError = gutil.PluginError;
+var sitemapFields = ['loc', 'lastmod', 'changefreq', 'priority'];
+var pluginName = 'gulp-sitemap-files';
 
 module.exports = function(siteUrl){
-    var pluginName = 'gulp-sitemap-files';
-    if(siteUrl) siteUrl = siteUrl + (siteUrl.slice(-1) === '/' ? '' : '/');
+    //append trailing slash
+    if(siteUrl && siteUrl.slice(-1) !== '/') siteUrl += '/';
 
-    function bufferContents(file) {
-        if (file.isNull()) return; // ignore
-        if (file.isStream()) return this.emit('error', new Error(pluginName + ': Streaming not supported'));
-        if(!siteUrl) return this.emit('error', new Error(pluginName + ': siteUrl argument missing!'));
+    if(!siteUrl) throw new Error(pluginName + ': siteUrl argument missing!');
+
+    function bufferContents(file, enc, cb) {
+        //pass through null files
+        if (file.isNull()) {
+            cb(null, file);
+            return;
+        }
+
+        //don't support stream for now
+        if (file.isStream()) {
+            cb(new PluginError(pluginName, 'Streaming not supported'));
+            return;
+        }
+
+        var xml = file.contents.toString();
+        //early exit if no data
+        if (!xml) {
+            cb(null, file);
+            return;
+        }
 
         var self = this;
-        var xml = file.contents.toString();
-        if(xml) {
-            parseXML(xml, function (err, result) {
-                if(err) return self.emit('error', err);
+        parseXML(xml, function (err, result) {
+            if(err) return cb(new PluginError(pluginName, err));
 
-                result.urlset.url.forEach(function(url){
-                    var relativePathToFile = url.loc.toString().replace(new RegExp('^' + siteUrl), '');
-                    relativePathToFile = relativePathToFile + (!relativePathToFile || relativePathToFile.slice(-1) === '/' ? 'index.html' : '');
+            result.urlset.url.forEach(function(url){
+                var relativePathToFile = url.loc.toString().replace(new RegExp('^' + siteUrl), '');
+                if (!relativePathToFile || relativePathToFile.slice(-1) === '/') {
+                    relativePathToFile = relativePathToFile + 'index.html';
+                }
 
-                    var fullFilePath = path.join(path.dirname(file.path), relativePathToFile);
-                    if(!fs.existsSync(fullFilePath)) return; // ignore if target document doesn't exist
-                    var fileContents = fs.readFileSync(fullFilePath);
+                var fullFilePath = path.join(path.dirname(file.path), relativePathToFile);
+                // ignore if target document doesn't exist
+                // TODO: think about outputting a warning here
+                if(!fs.existsSync(fullFilePath)) return;
+                var fileContents = fs.readFileSync(fullFilePath);
 
-                    var vinyl = new Vinyl({
-                        cwd: file.cwd,
-                        base: file.base,
-                        path: fullFilePath,
-                        contents: fileContents,
-                        stat: fs.statSync(fullFilePath)
-                    });
-
-                    vinyl.sitemap = {};
-                    ['loc', 'lastmod', 'changefreq', 'priority'].forEach(function(property){
-                        if(url[property]) {
-                            vinyl.sitemap[property] = url[property][0];
-                        }
-                    });
-
-                    self.push(vinyl);
+                var vinyl = new gutil.File({
+                    cwd: file.cwd,
+                    base: file.base,
+                    path: fullFilePath,
+                    contents: fileContents,
+                    stat: fs.statSync(fullFilePath)
                 });
+
+                vinyl.sitemap = {};
+                sitemapFields.forEach(function(property){
+                    if(url[property]) {
+                        vinyl.sitemap[property] = url[property][0];
+                    }
+                });
+
+                self.push(vinyl);
             });
-        }
-        else
-        {
-            this.push(file);
-        }
+        });
+        cb();
     }
 
-    return through(bufferContents);
+    return through.obj(bufferContents);
 };
