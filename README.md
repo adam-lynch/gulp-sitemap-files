@@ -57,4 +57,4 @@ gulp.task('default', ['clean']);
 [travis-image]: http://img.shields.io/travis/adam-lynch/gulp-sitemap-files.svg?style=flat
 
 [depstat-url]: https://david-dm.org/adam-lynch/gulp-sitemap-files
-[depstat-image]: https://david-dm.org/adam-lynch/gulp-sitemap-files.png
+[depstat-image]: https://david-dm.org/adam-lynch/gulp-sitemap-files.svg?style=flat
