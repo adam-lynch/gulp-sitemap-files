@@ -1,6 +1,6 @@
 {
   "name": "gulp-sitemap-files",
-  "version": "0.0.4",
+  "version": "1.0.0",
   "description": "Gulp plugin to get all files listed in a sitemap",
   "main": "index.js",
   "repository": {
