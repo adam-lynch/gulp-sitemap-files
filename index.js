@@ -25,6 +25,7 @@ module.exports = function(siteUrl){
                     relativePathToFile = relativePathToFile + (!relativePathToFile || relativePathToFile.slice(-1) === '/' ? 'index.html' : '');
 
                     var fullFilePath = path.join(path.dirname(file.path), relativePathToFile);
+                    if(!fs.existsSync(fullFilePath)) return; // ignore if target document doesn't exist
                     var fileContents = fs.readFileSync(fullFilePath);
 
                     var vinyl = new Vinyl({

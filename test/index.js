@@ -65,6 +65,30 @@ describe('gulp-sitemap-files', function(){
     });
 
 
+    it("should skip ignore empty target documents", function(done){
+        var file = createFile(
+            'sitemap-a.xml',
+            fs.readFileSync('./test/fixtures/simple.xml').toString()
+                .replace('<loc>http://www.example.com/</loc>', '<loc>http://www.example.com/oops</loc>')
+        );
+
+        var numberOfOutputFiles = 0;
+        var stream = sitemapFiles('http://www.example.com');
+
+        stream.on('data', function(file){
+            numberOfOutputFiles++;
+        });
+
+        stream.on('end', function(){
+            expect(numberOfOutputFiles).to.equal(0);
+            done();
+        });
+
+        stream.write(file);
+        stream.end();
+    });
+
+
     it("should add on the sitemap object to each non-empty file, with the correct contents and handling index defaults", function(done){
         var exampleContents = fs.readFileSync('./test/fixtures/simple.xml').toString();
         var files = [
