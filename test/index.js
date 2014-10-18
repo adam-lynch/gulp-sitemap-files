@@ -2,13 +2,13 @@ var sitemapFiles = require('../');
 var fs = require('fs');
 var path = require('path');
 var mocha = require('mocha');
-var File = require('vinyl');
+var gutil = require('gulp-util');
 var Buffer = require('buffer').Buffer;
 var chai = require('chai');
 var expect = chai.expect;
 
 var createFile = function(filename, contents){
-    return new File({
+    return new gutil.File({
         path: path.resolve('./test/fixtures/' + filename),
         contents: new Buffer(contents)
     });
@@ -16,30 +16,10 @@ var createFile = function(filename, contents){
 
 describe('gulp-sitemap-files', function(){
 
-    it("should throw an error if siteUrl isn't passed", function(done){
+    it("should throw an error if siteUrl isn't passed", function(){
         var file = createFile('simple.xml', '');
 
-        var numberOfOutputFiles = 0;
-        var numberOfErrorsThrown = 0;
-        var stream = sitemapFiles();
-
-        stream.on('data', function(){
-            numberOfOutputFiles++;
-        });
-
-        stream.on('end', function(){
-            expect(numberOfOutputFiles).to.equal(0);
-            expect(numberOfErrorsThrown).to.equal(1);
-            done();
-        });
-
-        stream.on('error', function(){
-            numberOfErrorsThrown++;
-        });
-
-        expect(stream.write).to.throw(Error);
-        stream.write(file);
-        stream.end();
+        expect(sitemapFiles).to.throw(Error);
     });
 
 
