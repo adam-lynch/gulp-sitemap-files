@@ -11,10 +11,10 @@ var pluginName = 'gulp-sitemap-files';
 
 module.exports = function(siteUrl){
     //append trailing slash
-    if(siteUrl && siteUrl.slice(-1) !== '/') siteUrl += '/';
-
     if(!siteUrl) throw new Error(pluginName + ': siteUrl argument missing!');
-
+    
+    if(siteUrl.slice(-1) !== '/') siteUrl += '/';
+    
     function bufferContents(file, enc, cb) {
         //pass through null files
         if (file.isNull()) {
