@@ -38,7 +38,7 @@ module.exports = function(siteUrl){
         var self = this;
         parseXML(xml, function (err, result) {
             if(err) {
-                self.emit('error', new PluginError(pluginName, err));
+                cb(new PluginError(pluginName, err));
                 return;
             }
 
@@ -71,8 +71,9 @@ module.exports = function(siteUrl){
 
                 self.push(vinyl);
             });
+
+            cb();
         });
-        cb();
     }
 
     return through.obj(bufferContents);
