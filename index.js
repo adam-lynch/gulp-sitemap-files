@@ -37,7 +37,10 @@ module.exports = function(siteUrl){
 
         var self = this;
         parseXML(xml, function (err, result) {
-            if(err) return cb(new PluginError(pluginName, err));
+            if(err) {
+                cb(new PluginError(pluginName, err));
+                return;
+            }
 
             result.urlset.url.forEach(function(url){
                 var relativePathToFile = url.loc.toString().replace(new RegExp('^' + siteUrl), '');
@@ -68,8 +71,9 @@ module.exports = function(siteUrl){
 
                 self.push(vinyl);
             });
+
+            cb();
         });
-        cb();
     }
 
     return through.obj(bufferContents);
