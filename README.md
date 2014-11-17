@@ -1,5 +1,9 @@
-gulp-sitemap-files [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][depstat-image]][depstat-url]
-=====================
+gulp-sitemap-files 
+==========
+
+[![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Windows Build Status][appveyor-image]][appveyor-url] [![Dependency Status][depstat-image]][depstat-url] 
+
+---
 
 A [Gulp](http://github.com/gulpjs/gulp) plugin to get all files listed in a sitemap. See [sitemaps.org/protocol.html](http://www.sitemaps.org/protocol.html) and [pgilad/gulp-sitemap](https://github.com/pgilad/gulp-sitemap).
 
@@ -55,6 +59,9 @@ gulp.task('default', ['clean']);
 
 [travis-url]: http://travis-ci.org/adam-lynch/gulp-sitemap-files
 [travis-image]: http://img.shields.io/travis/adam-lynch/gulp-sitemap-files.svg?style=flat
+
+[appveyor-url]: https://ci.appveyor.com/project/adam-lynch/gulp-sitemap-files/branch/master
+[appveyor-image]: https://ci.appveyor.com/api/projects/status/7602fkeeaxruxc22/branch/master?svg=true
 
 [depstat-url]: https://david-dm.org/adam-lynch/gulp-sitemap-files
 [depstat-image]: https://david-dm.org/adam-lynch/gulp-sitemap-files.svg?style=flat
